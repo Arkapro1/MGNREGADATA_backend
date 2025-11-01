@@ -1,9 +1,16 @@
 const { Pool } = require('pg');
 const config = require('../config');
 
+// Get the correct connection URL (handles Docker networking)
+const connectionString = config.database.getConnectionUrl 
+  ? config.database.getConnectionUrl() 
+  : config.database.url;
+
+console.log('🔌 Connecting to PostgreSQL:', connectionString.replace(/:[^:@]+@/, ':***@'));
+
 // Create PostgreSQL connection pool
 const pool = new Pool({
-  connectionString: config.database.url,
+  connectionString: connectionString,
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 20000, // Increased to 20 seconds

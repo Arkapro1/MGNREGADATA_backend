@@ -16,6 +16,20 @@ module.exports = {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
+    // Auto-fix for Docker: If DATABASE_URL uses public IP and we're in Docker, use internal hostname
+    getConnectionUrl: function() {
+      let dbUrl = this.url;
+      
+      // If in production and using public IP, try to use Docker internal hostname
+      if (process.env.NODE_ENV === 'production' && dbUrl && dbUrl.includes('72.60.196.209')) {
+        // Try to find PostgreSQL container hostname
+        const dockerPgHost = process.env.DOCKER_PG_HOST || 'dbgt-postgt-2sc98v.1.w9j9b052m164pnwa67dtwuafa';
+        dbUrl = dbUrl.replace('72.60.196.209', dockerPgHost);
+        console.log('🐳 Docker mode detected - Using internal PostgreSQL hostname:', dockerPgHost);
+      }
+      
+      return dbUrl;
+    }
   },
   redis: {
     host: process.env.REDIS_HOST,
