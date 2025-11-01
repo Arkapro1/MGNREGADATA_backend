@@ -1,0 +1,39 @@
+# Node modules
+node_modules
+npm-debug.log
+
+# Environment files (will be set in Dockploy)
+.env.local
+.env.development
+.env.test
+
+# Git
+.git
+.gitignore
+
+# Development files
+.vscode
+.idea
+*.log
+*.md
+README.md
+
+# Test files
+test
+tests
+*.test.js
+*.spec.js
+
+# CI/CD
+.github
+.gitlab-ci.yml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp
+temp
+*.tmp
+*.swp
