@@ -6,7 +6,8 @@ const pool = new Pool({
   connectionString: config.database.url,
   max: 20,
   idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 5000,
+  connectionTimeoutMillis: 20000, // Increased to 20 seconds
+  statement_timeout: 30000, // 30 second query timeout
 });
 
 // Test connection
