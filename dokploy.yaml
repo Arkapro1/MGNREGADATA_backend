@@ -1,0 +1,34 @@
+# Dockploy Configuration
+# This file tells Dockploy to disable Traefik and use direct port mapping
+
+name: mgnrega-backend
+type: application
+
+# Disable Traefik - we want direct IP access
+traefik:
+  enabled: false
+
+# Port configuration for direct access
+ports:
+  - containerPort: 5000
+    hostPort: 5000
+    protocol: tcp
+
+# Deployment settings
+deployment:
+  replicas: 1
+  restartPolicy: unless-stopped
+
+# Health check
+healthCheck:
+  enabled: true
+  path: /api/health
+  port: 5000
+  interval: 30s
+  timeout: 10s
+  retries: 3
+
+# Environment (set these in Dockploy UI instead)
+# environment:
+#   - PORT=5000
+#   - NODE_ENV=production
